@@ -338,6 +338,58 @@ overflow-x: auto; /* Enable horizontal scrolling for table */
 -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
+/* NEW: Responsive Table Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .table-responsive table {
+        border: 0; /* Remove table border */
+        border-radius: 0; /* Remove table border radius */
+        table-layout: auto; /* Allow columns to auto-size */
+    }
+
+    .table-responsive thead {
+        display: none; /* Hide table header on small screens */
+    }
+
+    .table-responsive tr {
+        display: block; /* Make table rows behave like blocks */
+        margin-bottom: 1rem; /* Add space between rows */
+        border: 1px solid var(--card-border); /* Add border to each row */
+        border-radius: 15px; /* Rounded corners for each row */
+        overflow: hidden; /* Ensure rounded corners apply */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Subtle shadow for each row */
+    }
+
+    .table-responsive td {
+        display: block; /* Make table cells behave like blocks */
+        text-align: right; /* Align text to the right */
+        border-bottom: 1px dashed var(--card-border); /* Dashed border between cells */
+        padding-left: 50%; /* Push content to the right */
+        position: relative; /* For pseudo-element positioning */
+        white-space: normal; /* Allow text to wrap */
+        overflow: visible; /* Allow content to be visible */
+        text-overflow: clip; /* No ellipsis needed when wrapping */
+    }
+
+    .table-responsive td:last-child {
+        border-bottom: 0; /* No border on the last cell */
+    }
+
+    .table-responsive td::before {
+        content: attr(data-label); /* Use data-label for pseudo-element content */
+        position: absolute;
+        left: 12px; /* Position label to the left */
+        width: calc(50% - 24px); /* Width for the label */
+        padding-right: 10px;
+        white-space: nowrap; /* Keep label on one line */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: bold;
+        color: var(--primary); /* Color for the label */
+        text-align: left; /* Align label text to the left */
+    }
+}
+
+
 /* Toggle switch (if used) */
 .switch {
 position: relative;
@@ -933,7 +985,7 @@ animation-delay: 5s;
 <i class="fas fa-cloud-download-alt"></i> Download Now!
 </a>
 <div class="text-center mt-4">
-<a href="#" class="text-blue-500 font-bold" onclick="showTab('login-tab')">Back to Login">Back to Login</a>
+<a href="#" class="text-blue-500 font-bold" onclick="showTab('login-tab')">Back to Login</a>
 </div>
 </div>
 </div>
@@ -1372,34 +1424,21 @@ const row = document.createElement('tr');
 const dateObj = new Date(item.date);
 const formattedDate = `${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getDate().toString().padStart(2, '0')}/${dateObj.getFullYear()}`;
 
-const dateCell = document.createElement('td');
-dateCell.textContent = formattedDate; // Use formatted date
-
-const allowanceCell = document.createElement('td');
-allowanceCell.textContent = `₱${item.allowance.toFixed(2)}`;
-
-const transportationCell = document.createElement('td');
-transportationCell.textContent = `₱${item.transportation.toFixed(2)}`;
-
-const foodCell = document.createElement('td');
-foodCell.textContent = `₱${item.food.toFixed(2)}`;
-
-const otherExpensesCell = document.createElement('td');
-// Sum all individual other expenses for display in history
+const allowance = item.allowance.toFixed(2);
+const transportation = item.transportation.toFixed(2);
+const food = item.food.toFixed(2);
 const totalOther = Array.isArray(item.otherExpenses) ? item.otherExpenses.reduce((sum, oe) => sum + oe.amount, 0) : item.otherExpenses;
-otherExpensesCell.textContent = `₱${totalOther.toFixed(2)}`;
+const otherExpenses = totalOther.toFixed(2);
+const remainingBalance = item.remainingBalance.toFixed(2);
 
-const remainingBalanceCell = document.createElement('td');
-remainingBalanceCell.textContent = `₱${item.remainingBalance.toFixed(2)}`;
-remainingBalanceCell.style.fontWeight = 'bold';
-remainingBalanceCell.style.color = item.remainingBalance >= 0 ? 'var(--secondary)' : 'var(--primary)'; // Green for positive, red for negative
-
-row.appendChild(dateCell);
-row.appendChild(allowanceCell);
-row.appendChild(transportationCell);
-row.appendChild(foodCell);
-row.appendChild(otherExpensesCell);
-row.appendChild(remainingBalanceCell);
+row.innerHTML = `
+    <td data-label="Date"> ${formattedDate}</td>
+    <td data-label="Allowance (₱)">₱${allowance}</td>
+    <td data-label="Transportation (₱)">₱${transportation}</td>
+    <td data-label="Meal/Snacks (₱)">₱${food}</td>
+    <td data-label="Other Expenses (₱)">₱${otherExpenses}</td>
+    <td data-label="Remaining Balance (₱)" style="font-weight: bold; color: ${item.remainingBalance >= 0 ? 'var(--secondary)' : 'var(--primary)'};">₱${remainingBalance}</td>
+`;
 
 tbody.appendChild(row);
 });
