@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazing Digestive System!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: #f0f9ff;
+            overflow-x: hidden;
+        }
+        
+        .organ {
+            position: absolute;
+            cursor: pointer;
+            transition: transform 0.3s;
+            z-index: 10;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+        
+        .organ:hover {
+            transform: scale(1.1) rotate(5deg);
+            z-index: 20;
+        }
+        
+        .organ-name {
+            background-color: white;
+            border-radius: 12px;
+            padding: 4px 8px;
+            margin-top: 5px;
+            font-weight: bold;
+            font-size: 12px;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .organs-container {
+            position: relative;
+            margin: 20px 0;
+            background: transparent;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 0;
+            min-height: 315px; /* prevents iframe from collapsing on mobile */
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin: 40px auto 20px;
+            background-color: #e2f0ff;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4b85e8;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .organ {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .organ-name {
+                font-size: 10px;
+                padding: 2px 6px;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-indigo-700 mb-4">Amazing Digestive System!</h1>
+            <p class="text-lg text-blue-600">Click on the floating body parts to learn more!</p>
+        </header>
+
+        <div class="video-container">
+            <iframe class="w-full h-full absolute top-0 left-0" 
+                    src="https://drive.google.com/file/d/1uYBEZmT89p12k8bNKXqT1iP0Ej6FoFrb/view?usp=drive_link" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+            </iframe>
+        </div>
+        
+        <div class="organs-container relative w-full h-96 mb-8">
+            <div class="organ" style="top: 10%; left: 15%;" onclick="showTooltip('Mouth')">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b6128846-22a4-4821-b10c-9eaecb82b646.png" alt="Cute smiling cartoon mouth with pink lips and white teeth">
+                <span class="organ-name">Mouth</span>
+            </div>
+            
+            <div class="organ" style="top: 45%; left: 65%;" onclick="showTooltip('Stomach')">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a31c3ed0-707d-4a5e-9113-e82b5cf343ec.png" alt="Round cartoon stomach with happy face and purple color">
+                <span class="organ-name">Stomach</span>
+            </div>
+            
+            <div class="organ" style="top: 30%; left: 75%;" onclick="showTooltip('Esophagus')">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d701f1fd-8215-4c04-aa15-d07cf61d4553.png" alt="Cartoon esophagus shaped like a pink twisting slide">
+                <span class="organ-name">Esophagus</span>
+            </div>
+            
+            <div class="organ" style="top: 60%; left: 30%;" onclick="showTooltip('Small Intestine')">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/84e9a7e4-1445-4b8e-b2b0-e6fe26879384.png" alt="Yellow cartoon small intestine with curly shape and happy eyes">
+                <span class="organ-name">Small Intestine</span>
+            </div>
+            
+            <div class="organ" style="top: 70%; left: 50%;" onclick="showTooltip('Large Intestine')">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f0637558-c8cf-4824-bdf6-e568b918bf47.png" alt="Cartoon large intestine shaped like a brown upside down U with smile">
+                <span class="organ-name">Large Intestine</span>
+            </div>
+            
+            <div class="organ" style="top: 80%; left: 80%;" onclick="showTooltip('Anus')">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/800f84de-ce7c-4293-b2c0-32d4fc0f1ba5.png" alt="Small circular cartoon anus with shy expression">
+                <span class="organ-name">Anus</span>
+            </div>
+            
+            <div class="organ" style="top: 20%; left: 85%;" onclick="showTooltip('Salivary Glands')">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/71d27cc9-add3-4abb-9c38-47d821d26390.png" alt="Cute pink salivary glands shaped like grapes near mouth">
+                <span class="organ-name">Salivary Glands</span>
+            </div>
+            
+            <div class="organ" style="top: 50%; left: 85%;" onclick="showTooltip('Gall Bladder')">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2f43b9f3-b882-4af0-b237-55362e9b817f.png" alt="Teal green cartoon gall bladder with small smile">
+                <span class="organ-name">Gall Bladder</span>
+            </div>
+            
+            <div class="organ" style="top: 60%; left: 70%;" onclick="showTooltip('Pancreas')">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5321cfd6-3649-4e20-b92b-12d3aef7da0a.png" alt="Yellowish cartoon pancreas shaped like a fish with big eyes">
+                <span class="organ-name">Pancreas</span>
+            </div>
+            
+            <div class="organ" style="top: 40%; left: 45%;" onclick="showTooltip('Liver')">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e4d938db-cbcb-4d72-bb74-6b26b91a8e1d.png" alt="Large cartoon liver with reddish color and friendly eyes">
+                <span class="organ-name">Liver</span>
+            </div>
+            
+            <div class="organ" style="top: 35%; left: 25%;" onclick="showTooltip('Spleen')">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/62fa9261-2dad-4ae6-a5d7-1f1cc8c550d9.png" altPurple cartoon spleen shaped like a bean with sunglasses">
+                <span class="organ-name">Spleen</span>
+            </div>
+            
+            <div class="organ" style="top: 75%; left: 35%;" onclick="showTooltip('Appendix')">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/cd484ff1-a09f-4e7b-a677-835565883f06.png" alt="Tiny cartoon appendix shaped like a pink worm with happy face">
+                <span class="organ-name">Appendix</span>
+            </div>
+            
+            <div class="organ" style="top: 85%; left: 60%;" onclick="showTooltip('Rectum')">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f396263b-7122-487d-a37d-3d7d4402d25c.png" alt="Cartoon rectum shaped like a short tube with shy expression">
+                <span class="organ-name">Rectum</span>
+            </div>
+        </div>
+
+        <div id="info-panel" class="mt-8 p-4 bg-white rounded-lg shadow-lg hidden">
+            <h3 id="info-title" class="text-xl font-bold text-blue-700 mb-2"></h3>
+            <p id="info-content" class="text-gray-700"></p>
+            <button onclick="hideTooltip()" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Got it!</button>
+        </div>
+
+        <div class="mt-10 text-center">
+            <button onclick="startFloating()" class="px-6 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 mr-2">Make them float!</button>
+            <button onclick="stopFloating()" class="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700">Stop floating</button>
+        </div>
+    </div>
+
+    <script>
+        const organInfo = {
+            'Mouth': 'The mouth is where digestion begins! Teeth chew food while saliva makes it soft and slippery.',
+            'Stomach': 'The stomach is like a stretchy bag that mixes food with special juices to break it down.',
+            'Esophagus': 'The esophagus is a tube that carries food from mouth to stomach like a slide!',
+            'Small Intestine': 'This is where most nutrients are absorbed. It"s very long but coiled up neatly.',
+            'Large Intestine': 'It absorbs water and turns liquid waste into solid poop. Also called the colon!',
+            'Anus': 'The exit door where poop leaves the body after its long journey.',
+            'Salivary Glands': 'These make saliva that helps break down food and makes swallowing easy.',
+            'Gall Bladder': 'A small pouch that stores bile, helping digest fats like butter and oil.',
+            'Pancreas': 'Makes special juices to neutralize stomach acid and help digest food.',
+            'Liver': 'The body"s factory! It processes nutrients, removes toxins, and makes bile.',
+            'Spleen': 'Part of the immune system, helps filter blood and fight infections.',
+            'Appendix': 'A tiny tube that might help good bacteria grow after sickness.',
+            'Rectum': 'The last part of the large intestine where poop waits until it"s time to go.'
+        };
+
+        let animationId;
+        let floating = false;
+
+        function showTooltip(organ) {
+            const panel = document.getElementById('info-panel');
+            const title = document.getElementById('info-title');
+            const content = document.getElementById('info-content');
+            
+            panel.classList.remove('hidden');
+            title.textContent = organ;
+            content.textContent = organInfo[organ];
+        }
+
+        function hideTooltip() {
+            document.getElementById('info-panel').classList.add('hidden');
+        }
+
+        function startFloating() {
+            if (floating) return;
+            floating = true;
+            
+            const organs = document.querySelectorAll('.organ');
+            const container = document.querySelector('.organs-container');
+            const containerRect = container.getBoundingClientRect();
+            
+            organs.forEach(organ => {
+                let x = Math.random() * containerRect.width;
+                let y = Math.random() * containerRect.height;
+                let xSpeed = (Math.random() - 0.5) * 2;
+                let ySpeed = (Math.random() - 0.5) * 2;
+                
+                updatePosition(organ, x, y, xSpeed, ySpeed, containerRect);
+            });
+        }
+
+        function updatePosition(organ, x, y, xSpeed, ySpeed, bounds) {
+            if (!floating) return;
+            
+            x += xSpeed;
+            y += ySpeed;
+            
+            // Bounce off walls
+            if (x <= 0 || x >= bounds.width - 70) {
+                xSpeed *= -1;
+                x = Math.max(0, Math.min(bounds.width - 70, x));
+            }
+            
+            if (y <= 0 || y >= bounds.height - 70) {
+                ySpeed *= -1;
+                y = Math.max(0, Math.min(bounds.height - 70, y));
+            }
+            
+            organ.style.left = `${x}px`;
+            organ.style.top = `${y}px`;
+            
+            // Small random speed adjustments
+            xSpeed += (Math.random() - 0.5) * 0.2;
+            ySpeed += (Math.random() - 0.5) * 0.2;
+            
+            // Keep speeds within reasonable bounds
+            xSpeed = Math.max(-3, Math.min(3, xSpeed));
+            ySpeed = Math.max(-3, Math.min(3, ySpeed));
+            
+            animationId = requestAnimationFrame(() => {
+                updatePosition(organ, x, y, xSpeed, ySpeed, bounds);
+            });
+        }
+
+        function stopFloating() {
+            floating = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+        }
+
+        // Initialize with some random positions on load
+        window.addEventListener('load', () => {
+            const organs = document.querySelectorAll('.organ');
+            const container = document.querySelector('.video-container');
+            const containerRect = container.getBoundingClientRect();
+            
+            organs.forEach(organ => {
+                organ.style.left = `${Math.random() * (containerRect.width - 70)}px`;
+                organ.style.top = `${Math.random() * (containerRect.height - 70)}px`;
+            });
+        });
+    </script>
+</body>
+</html>
+
