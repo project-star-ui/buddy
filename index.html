@@ -47,6 +47,8 @@
             position: relative;
             margin: 20px 0;
             background: transparent;
+            /* Adjust height for mobile to prevent excessive scrolling */
+            height: 450px; /* Increased height for better organ distribution on mobile */
         }
 
         .video-container {
@@ -58,20 +60,103 @@
             border-radius: 16px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
             overflow: hidden;
-            position: relative; /* Added for iframe positioning */
+            position: relative;
         }
         
-        /* Removed .video-placeholder as it's no longer needed */
-        
+        /* Mobile-specific adjustments */
         @media (max-width: 768px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            h1 {
+                font-size: 2.5rem; /* Smaller heading for mobile */
+            }
+
+            p {
+                font-size: 1rem; /* Smaller paragraph text for mobile */
+            }
+
             .organ {
-                width: 50px;
-                height: 50px;
+                width: 60px; /* Slightly smaller organs */
+                height: 60px;
             }
             
             .organ-name {
                 font-size: 10px;
                 padding: 2px 6px;
+            }
+
+            .organs-container {
+                height: 400px; /* Adjust height for mobile */
+            }
+
+            /* Repositioning organs for better mobile layout */
+            .organ:nth-child(1) { /* Mouth */
+                top: 5%; left: 50%; transform: translateX(-50%);
+            }
+            .organ:nth-child(2) { /* Stomach */
+                top: 35%; left: 50%; transform: translateX(-50%);
+            }
+            .organ:nth-child(3) { /* Esophagus */
+                top: 15%; left: 50%; transform: translateX(-50%);
+            }
+            .organ:nth-child(4) { /* Small Intestine */
+                top: 55%; left: 50%; transform: translateX(-50%);
+            }
+            .organ:nth-child(5) { /* Large Intestine */
+                top: 70%; left: 50%; transform: translateX(-50%);
+            }
+            .organ:nth-child(6) { /* Anus */
+                top: 90%; left: 50%; transform: translateX(-50%);
+            }
+            .organ:nth-child(7) { /* Salivary Glands */
+                top: 10%; left: 20%;
+            }
+            .organ:nth-child(8) { /* Gall Bladder */
+                top: 40%; left: 20%;
+            }
+            .organ:nth-child(9) { /* Pancreas */
+                top: 45%; left: 80%;
+            }
+            .organ:nth-child(10) { /* Liver */
+                top: 25%; left: 20%;
+            }
+            .organ:nth-child(11) { /* Spleen */
+                top: 30%; left: 80%;
+            }
+            .organ:nth-child(12) { /* Appendix */
+                top: 80%; left: 20%;
+            }
+            .organ:nth-child(13) { /* Rectum */
+                top: 85%; left: 80%;
+            }
+
+            /* Adjust button sizes for mobile */
+            button {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Tablet-specific adjustments */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            p {
+                font-size: 1.1rem;
+            }
+            .organ {
+                width: 65px;
+                height: 65px;
+            }
+            .organ-name {
+                font-size: 11px;
+            }
+            .organs-container {
+                height: 400px;
             }
         }
     </style>
@@ -217,8 +302,8 @@
             const containerRect = container.getBoundingClientRect();
             
             organs.forEach(organ => {
-                let x = Math.random() * containerRect.width;
-                let y = Math.random() * containerRect.height;
+                let x = Math.random() * (containerRect.width - organ.offsetWidth);
+                let y = Math.random() * (containerRect.height - organ.offsetHeight);
                 let xSpeed = (Math.random() - 0.5) * 2;
                 let ySpeed = (Math.random() - 0.5) * 2;
                 
@@ -233,14 +318,14 @@
             y += ySpeed;
             
             // Bounce off walls
-            if (x <= 0 || x >= bounds.width - 70) {
+            if (x <= 0 || x >= bounds.width - organ.offsetWidth) {
                 xSpeed *= -1;
-                x = Math.max(0, Math.min(bounds.width - 70, x));
+                x = Math.max(0, Math.min(bounds.width - organ.offsetWidth, x));
             }
             
-            if (y <= 0 || y >= bounds.height - 70) {
+            if (y <= 0 || y >= bounds.height - organ.offsetHeight) {
                 ySpeed *= -1;
-                y = Math.max(0, Math.min(bounds.height - 70, y));
+                y = Math.max(0, Math.min(bounds.height - organ.offsetHeight, y));
             }
             
             organ.style.left = `${x}px`;
@@ -273,8 +358,8 @@
             const containerRect = container.getBoundingClientRect();
             
             organs.forEach(organ => {
-                organ.style.left = `${Math.random() * (containerRect.width - 70)}px`;
-                organ.style.top = `${Math.random() * (containerRect.height - 70)}px`;
+                organ.style.left = `${Math.random() * (containerRect.width - organ.offsetWidth)}px`;
+                organ.style.top = `${Math.random() * (containerRect.height - organ.offsetHeight)}px`;
             });
             
             // Automatically start floating when the page loads
