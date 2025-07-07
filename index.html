@@ -52,28 +52,16 @@
         .video-container {
             width: 100%;
             height: 0;
-            min-height: 315px; /* prevents iframe from collapsing on mobile */
             padding-bottom: 56.25%; /* 16:9 aspect ratio */
             margin: 40px auto 20px;
             background-color: #e2f0ff;
             border-radius: 16px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
             overflow: hidden;
+            position: relative; /* Added for iframe positioning */
         }
         
-        .video-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #4b85e8;
-            font-size: 18px;
-            font-weight: bold;
-        }
+        /* Removed .video-placeholder as it's no longer needed */
         
         @media (max-width: 768px) {
             .organ {
@@ -96,11 +84,14 @@
         </header>
 
         <div class="video-container">
-            <iframe class="w-full h-full absolute top-0 left-0" 
-                    src="https://drive.google.com/file/d/1uYBEZmT89p12k8bNKXqT1iP0Ej6FoFrb/view?usp=drive_link" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
+            <iframe 
+                width="100%" 
+                height="100%" 
+                src="https://www.youtube.com/embed/ZBZWgrfZFbU" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen
+                style="position: absolute; top: 0; left: 0;">
             </iframe>
         </div>
         
@@ -156,7 +147,7 @@
             </div>
             
             <div class="organ" style="top: 35%; left: 25%;" onclick="showTooltip('Spleen')">
-                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/62fa9261-2dad-4ae6-a5d7-1f1cc8c550d9.png" altPurple cartoon spleen shaped like a bean with sunglasses">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/62fa9261-2dad-4ae6-a5d7-1f1cc8c550d9.png" alt="Purple cartoon spleen shaped like a bean with sunglasses">
                 <span class="organ-name">Spleen</span>
             </div>
             
@@ -278,15 +269,17 @@
         // Initialize with some random positions on load
         window.addEventListener('load', () => {
             const organs = document.querySelectorAll('.organ');
-            const container = document.querySelector('.video-container');
+            const container = document.querySelector('.organs-container');
             const containerRect = container.getBoundingClientRect();
             
             organs.forEach(organ => {
                 organ.style.left = `${Math.random() * (containerRect.width - 70)}px`;
                 organ.style.top = `${Math.random() * (containerRect.height - 70)}px`;
             });
+            
+            // Automatically start floating when the page loads
+            startFloating(); 
         });
     </script>
 </body>
 </html>
-
